@@ -26,7 +26,7 @@ def get_wifi_name():
     return wifi_name
 
 def get_wifi(name):
-    sql = "select timestamp, count from wifi where wifitag = '%s';" % name
+    sql = "select timestamp, pcount from wifi where wifitag = '%s';" % name
 
     cursor.execute(sql)
     results = cursor.fetchall()
@@ -78,7 +78,7 @@ def get_error(source, pre):
                 err += e ** 2
     return err
 
-def predict(data):
+def predict(data, name):
     #error: 151179.674143
     av = get_total_avg(data)
     pre = {}
@@ -170,7 +170,7 @@ def predict2(data, name):
 
 name = "E1-1A-1<E1-1-01>"
 data = get_wifi(name)
-pre = predict2(data, name)
+pre = predict(data, name)
 tavg = get_day_avg(data)
 ds = []
 ps = []

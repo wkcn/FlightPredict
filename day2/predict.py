@@ -25,7 +25,7 @@ def get_wifi_name():
     return wifi_name
 
 def get_wifi(name):
-    sql = "select timestamp, count from wifi where wifitag = '%s';" % name
+    sql = "select timestamp, pcount from wifi where wifitag = '%s';" % name
 
     cursor.execute(sql)
     results = cursor.fetchall()
@@ -54,7 +54,7 @@ def CompareALL():
     plt.show()
 
 def CompareDay(name):
-    sql = "select timestamp, count from wifi where wifitag = '%s';" % name
+    sql = "select timestamp, pcount from wifi where wifitag = '%s';" % name
 
     cursor.execute(sql)
     results = cursor.fetchall()
@@ -98,7 +98,7 @@ def predict(name):
                     sample += cc[t][0]
                     count += cc[t][1]
             co = count * 1.0 / sample
-            out.append((round(co, 3), name, "2016-09-25-%.2d-%d" % (hour, minute) )) 
+            out.append((round(co, 4), name, "2016-09-25-%.2d-%d" % (hour, minute) )) 
     return out
 
 
@@ -108,7 +108,7 @@ def predict(name):
 #    wifis.append(line.strip())
 wifis = get_wifi_name()
 
-csvfile = file("result.csv", "wb")
+csvfile = file("airport_gz_passenger_predict.csv", "wb")
 writer = csv.writer(csvfile)
 writer.writerow(["passengerCount", "WIFIAPTag", "slice10min"])
 le = len(wifis)
